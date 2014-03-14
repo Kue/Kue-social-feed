@@ -1,4 +1,7 @@
 /* Plugin styles */
+
+.credits{font-family: "Finger Paint", "Trebuchet MS", Tahoma, Arial, sans-serif;text-align:center;padding:20px;margin-top:10px;font-size:12px;}
+.muted {color: #999999;}
 .social-feed-element .pull-left{
     float:left;
     margin-right: 10px;
