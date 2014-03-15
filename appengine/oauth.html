@@ -53,7 +53,7 @@ document.oncontextmenu=new Function("return false;");
       <p><a href="{{ current_user.profile_url }}"><img src="http://graph.facebook.com/{{ current_user.id }}/picture"/></a></p>
       <p>สวัสดีคุณ {{ current_user.name|escape }} </p>
       <p><a href="/auth/logout">ไม่ดูเเล้ว logout ออกได้เลยครับ!</a></p>   
-      <iframe  scrolling="no" width="620" height="3100" src="https://kue.github.io/Kue-social-feed/" frameborder="0" allowtransparency="true"></iframe>
+      <iframe  scrolling="no" width="620" height="2650" src="https://kue.github.io/Kue-social-feed/" frameborder="0" allowtransparency="true"></iframe>
     {% else %}
       <b>ต้องล็อกอินด้วยเฟสบุ๊คก่อนถึงจะดูได้นะครับผม :)</b>
       <p><a href="/auth/login"><img src="/static/facebook.png" title="login with facebook" /></a></p>
