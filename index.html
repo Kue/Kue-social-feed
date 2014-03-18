@@ -1,133 +1,227 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html> 
 <html xmlns:fb="https://www.facebook.com/2008/fbml">
-
-<!--
-/***
- *                                                
- *                                         ..     
- *    `7MMF' `YMM'                  OO      `bq   
- *      MM   .M'                    88        YA  
- *      MM .d"  `7MM  `7MM  .gP"Ya  ||     gp `Mb 
- *      MMMMM.    MM    MM ,M'   Yb ||     ""  8M 
- *      MM  VMA   MM    MM 8M"""""" `'         8M 
- *      MM   `MM. MM    MM YM.    , ,,     ,, ,M9 
- *    .JMML.   MMb`Mbod"YML.`Mbmmd' db     db dM  
- *                                          .pY   
- *                                         ''     
- */
--->
-
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Kue social feed</title>
-        <meta property="og:title" content="โซเชี่ยลฟีดของ kue"/>
-        <meta property="og:url" content="http://bit.ly/my-feed" />
-        <meta property="og:type" content="website"/>
-        <meta property="og:image" content="https://kue.github.io/Kue-social-feed/on_burning_cds.svg.hi.png"/>
-        <meta property="og:site_name" content="โซเชี่ยลฟีดของ kue"/>
-        <meta property="og:description" content="คำอธิบายไม่มี ฮิฮิฮิ..."/>
-        <link rel="shortcut icon" href="images/ico.png">
-	<!-- Screen CSS -->
-   	<link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" />	
-	<!-- Framework CSS -->
-	<link rel="stylesheet" href="css/foundation.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="css/app.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="css/text.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
-<link type="text/css" rel="stylesheet" href="css/colorbox.css" />
-<link type="text/css" rel="stylesheet" href="css/dpSocialTimeline.css" />
-<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="js/jquery.colorbox.min.js"></script>
-<script type="text/javascript" src="js/jquery.isotope.min.js"></script>
-<script type="text/javascript" src="js/jquery.dpSocialTimeline.min.js"></script>
-<<script type="text/javascript" src="js/app.js"></script>
-<script type="text/javascript">
-  WebFontConfig = {
-    google: { families: [ 'Shadows+Into+Light::latin' ] }
-  };
-  (function() {
-    var wf = document.createElement('script');
-    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-    wf.type = 'text/javascript';
-    wf.async = 'true';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(wf, s);
-  })(); 
-</script>
-  
-<script type="text/javascript">		
-function RClick(e){
-	var e;
-   if(event.button==2) {
-      document.oncontextmenu =function() {
-	  return false;
-	  }
-  }
-}
-document.oncontextmenu=new Function("return false;");
-</script>	
-<style type="text/css">html,body, a:hover {cursor: url(images/cursor_drag_hand.png), progress;}</style>	
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>New JavaScript SDK & OAuth 2.0 based FBConnect Tutorial | Thinkdiff.net</title>
+        <!--
+            @author: Mahmud Ahsan (http://mahmud.thinkdiff.net)
+        -->
     </head>
-<body id="top"> 
-<div id="fb-root"></div>
+    <body>
+        <div id="fb-root"></div>
+        <script type="text/javascript">
+            var button;
+            var userInfo;
+            
+            window.fbAsyncInit = function() {
+                FB.init({ appId: '213068875558203', //change the appId to your appId
+                    status: true, 
+                    cookie: true,
+                    xfbml: true,
+                    oauth: true});
 
-        <!-- Start Teaser -->
-		<div class="row ">
-			<div class="twelve columns">
-                <!-- Start Centered Text -->
-                <div class="grid_12" id="head_title">
-<h1>Kue social feed</h1>
-<div id="user-info"></div>
-<button id="fb-auth">Login</button>  
-
-                </div><!-- Centered Text END -->
-            </div>
-	
-		</div><!-- Teaser END -->
+               showLoader(true);
+               
+               function updateButton(response) {
+                    button       =   document.getElementById('fb-auth');
+                    userInfo     =   document.getElementById('user-info');
+                    
+                    if (response.authResponse) {
+                        //user is already logged in and connected
+                        FB.api('/me', function(info) {
+                            login(response, info);
+                        });
+                        
+                        button.onclick = function() {
+                            FB.logout(function(response) {
+                                logout(response);
+                            });
+                        };
+                    } else {
+                        //user is not connected to your app or logged out
+                        button.innerHTML = 'Login';
+                        button.onclick = function() {
+                            showLoader(true);
+                            FB.login(function(response) {
+                                if (response.authResponse) {
+                                    FB.api('/me', function(info) {
+                                        login(response, info);
+                                    });	   
+                                } else {
+                                    //user cancelled login or did not grant authorization
+                                    showLoader(false);
+                                }
+                            }, {scope:'email,user_birthday,status_update,publish_stream,user_about_me'});  	
+                        }
+                    }
+                }
+                
+                // run once with current status and whenever the status changes
+                FB.getLoginStatus(updateButton);
+                FB.Event.subscribe('auth.statusChange', updateButton);	
+            };
+            (function() {
+                var e = document.createElement('script'); e.async = true;
+                e.src = document.location.protocol 
+                    + '//connect.facebook.net/en_US/all.js';
+                document.getElementById('fb-root').appendChild(e);
+            }());
+            
+            
+            function login(response, info){
+                if (response.authResponse) {
+                    var accessToken                                 =   response.authResponse.accessToken;
+                    
+                    userInfo.innerHTML                             = '<img src="https://graph.facebook.com/' + info.id + '/picture">' + info.name
+                                                                     + "<br /> Your Access Token: " + accessToken;
+                    button.innerHTML                               = 'Logout';
+                    showLoader(false);
+                    document.getElementById('other').style.display = "block";
+                }
+            }
         
-        <!-- Start Header Break Line -->
-		<div class="row">
-        	<div class="twelve columns">
-				<hr class="grid_12"></hr> 
-<div id="other" style="display:none">                      
-<div id="socialTimeline"></div><br/>	
-<img src="images/mushroom-emo.gif" /><br/>good luck<br/>
-<div class="fb-comments" data-href="https://kue-social-feed.appspot.com/" data-numposts="30" data-colorscheme="light"></div> 
-</div>  
-            </div>
-		</div><!-- Header Break Line END -->
-		<div class="clear"></div>  	     
-<script type="text/javascript">
-            $('#socialTimeline').dpSocialTimeline({
-                feeds: 
-			{ 
-instagram: {data: 'jongkid00'},
-google: {data: 'http://gplusrss.com/rss/feed/719055d4a3534be61588102ef3bc16975324ad45574a5'},
-flickr: {data: '86895640@N07'},
-tumblr: {data: 'jongkid01'},soundcloud: {data: 'kid-remix'},																																														 },
-                layoutMode: 'timeline',
-				skin: 'light',
-                showSocialIcons: true,
-				showFilter: true,
-				showLayout: true,
-				share: true,
-				addColorbox: false,
-                total: 25,
-				timelineItemWidth: '260px',
-				columnsItemWidth: '275px',
-				oneColumnItemWidth: '98%'
-            });
-        </script>  
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            function logout(response){
+                userInfo.innerHTML                             =   "";
+                document.getElementById('debug').innerHTML     =   "";
+                document.getElementById('other').style.display =   "none";
+                showLoader(false);
+            }
 
-  ga('create', 'UA-49011904-1', 'kue-social-feed.appspot.com');
-  ga('send', 'pageview');
+            //stream publish method
+            function streamPublish(name, description, hrefTitle, hrefLink, userPrompt){
+                showLoader(true);
+                FB.ui(
+                {
+                    method: 'stream.publish',
+                    message: '',
+                    attachment: {
+                        name: name,
+                        caption: '',
+                        description: (description),
+                        href: hrefLink
+                    },
+                    action_links: [
+                        { text: hrefTitle, href: hrefLink }
+                    ],
+                    user_prompt_message: userPrompt
+                },
+                function(response) {
+                    showLoader(false);
+                });
 
-</script> 
-</body>
+            }
+            function showStream(){
+                FB.api('/me', function(response) {
+                    //console.log(response.id);
+                    streamPublish(response.name, 'I like the articles of Thinkdiff.net', 'hrefTitle', 'http://thinkdiff.net', "Share thinkdiff.net");
+                });
+            }
+
+            function share(){
+                showLoader(true);
+                var share = {
+                    method: 'stream.share',
+                    u: 'http://thinkdiff.net/'
+                };
+
+                FB.ui(share, function(response) { 
+                    showLoader(false);
+                    console.log(response); 
+                });
+            }
+
+            function graphStreamPublish(){
+                showLoader(true);
+                
+                FB.api('/me/feed', 'post', 
+                    { 
+                        message     : "I love thinkdiff.net for facebook app development tutorials",
+                        link        : 'http://ithinkdiff.net',
+                        picture     : 'http://thinkdiff.net/iphone/lucky7_ios.jpg',
+                        name        : 'iOS Apps & Games',
+                        description : 'Checkout iOS apps and games from iThinkdiff.net. I found some of them are just awesome!'
+                        
+                }, 
+                function(response) {
+                    showLoader(false);
+                    
+                    if (!response || response.error) {
+                        alert('Error occured');
+                    } else {
+                        alert('Post ID: ' + response.id);
+                    }
+                });
+            }
+
+            function fqlQuery(){
+                showLoader(true);
+                
+                FB.api('/me', function(response) {
+                    showLoader(false);
+                    
+                    //http://developers.facebook.com/docs/reference/fql/user/
+                    var query       =  FB.Data.query('select name, profile_url, sex, pic_small from user where uid={0}', response.id);
+                    query.wait(function(rows) {
+                       document.getElementById('debug').innerHTML =  
+                         'FQL Information: '+  "<br />" + 
+                         'Your name: '      +  rows[0].name                                                            + "<br />" +
+                         'Your Sex: '       +  (rows[0].sex!= undefined ? rows[0].sex : "")                            + "<br />" +
+                         'Your Profile: '   +  "<a href='" + rows[0].profile_url + "'>" + rows[0].profile_url + "</a>" + "<br />" +
+                         '<img src="'       +  rows[0].pic_small + '" alt="" />' + "<br />";
+                     });
+                });
+            }
+
+            function setStatus(){
+                showLoader(true);
+                
+                status1 = document.getElementById('status').value;
+                FB.api(
+                  {
+                    method: 'status.set',
+                    status: status1
+                  },
+                  function(response) {
+                    if (response == 0){
+                        alert('Your facebook status not updated. Give Status Update Permission.');
+                    }
+                    else{
+                        alert('Your facebook status updated');
+                    }
+                    showLoader(false);
+                  }
+                );
+            }
+            
+            function showLoader(status){
+                if (status)
+                    document.getElementById('loader').style.display = 'block';
+                else
+                    document.getElementById('loader').style.display = 'none';
+            }
+            
+        </script>
+
+        <h3>New JavaScript SDK & OAuth 2.0 based FBConnect Tutorial | Thinkdiff.net</h3>
+        <button id="fb-auth">Login</button>
+        <div id="loader" style="display:none">
+            <img src="ajax-loader.gif" alt="loading" />
+        </div>
+        <br />
+        <div id="user-info"></div>
+        <br />
+        <div id="debug"></div>
+        
+        <div id="other" style="display:none">
+            <a href="#" onclick="showStream(); return false;">Publish Wall Post</a> |
+            <a href="#" onclick="share(); return false;">Share With Your Friends</a> |
+            <a href="#" onclick="graphStreamPublish(); return false;">Publish Stream Using Graph API</a> |
+            <a href="#" onclick="fqlQuery(); return false;">FQL Query Example</a>
+            
+            <br />
+            <textarea id="status" cols="50" rows="5">Write your status here and click 'Status Set Using Legacy Api Call'</textarea>
+            <br />
+            <a href="#" onclick="setStatus(); return false;">Status Set Using Legacy Api Call</a>
+        </div>
+    </body>
 </html>
