@@ -24,57 +24,73 @@
     </head>
     <body>
 <div id="fb-root"></div>
- <script type="text/javascript">
+<script type="text/javascript">
 
-     window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '213068875558203', // App ID
-      channelUrl : '//kue.github.io/FriendOnline/channel.html', // Channel File
-      status     : true, // check login status
-      cookie     : true, // enable cookies to allow the server to access the session
-      xfbml      : true  // parse XFBML
-    });
-
-
-     //get login status
-         FB.getLoginStatus(onCheckLoginStatus(response));
-
-
-  //JS
-
-//OnCheckLoginStatus only works if I have it on the index page. 
-
-function onCheckLoginStatus (response)
-    {
-     if (response.status != "connected")
+     $(document).ready(function()
      {
-      top.location.href = "https://www.facebook.com/dialog/oauth?client_id=" + appId + "&redirect_uri=" + encodeURIComponent (redirectUrl) + "&scope=user_photos,friends_photos_email,user_birthday,user_about_me";
-     }
-     else
-     {
-     console.log("connected"); 
+        var appId = "213068875558203";
 
+        // If logging in as a Facebook canvas application use this URL.
+        var redirectUrl = "http://apps.facebook.com/bggressive";
 
-      $.ajax({
-        url : "http://sxxxxx/bn/s_Request.php",
-        type : 'POST',
-        data: {signed_request: response.authResponse.signedRequest},
-        success : function (result) {
-           console.log("success");
-           console.log(result);
-        },
-        error : function () {
-           alert("error parsing signed request");
+        // If logging in as a website do this. Be sure to add the host to your           application's App Domain list. 
+        var redirectUrl = window.location.href;
+
+        // If the user did not grant the app authorization go ahead and tell them that. Stop code execution.
+        if (0 <= window.location.href.indexOf ("error_reason"))
+        {
+             $(document.body).append ("<p>Authorization denied!</p>");
+             return;
         }
-    });
 
 
-      // Start the application (this is just demo code)!
-      $(document.body).append ("<p>Authorized!</p>");
+       // When the Facebook SDK script has finished loading init the
+       // SDK and then get the login status of the user. The status is
+       // reported in the handler.
+       window.fbAsyncInit = function()
+       {
+           FB.init({
+                     appId : appId,
+                     status : true,
+                     cookie : true,
+                     oauth : true
+           });
+           FB.getLoginStatus (onCheckLoginStatus);
+       };
 
-     }
-    } 
-        </script>
+       (function(d)
+       {
+          var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+          js = d.createElement('script'); js.id = id; js.async = true;
+          js.src = "//connect.facebook.net/en_US/all.js";
+          d.getElementsByTagName('head')[0].appendChild(js);
+       }(document));
+
+
+       function onCheckLoginStatus (response)
+       {
+          if (response.status != "connected")
+          {
+              top.location.href = "https://www.facebook.com/dialog/oauth?client_id=" + appId + "&redirect_uri=" + encodeURIComponent (redirectUrl) + "&scope=user_photos,friends_photos";
+          }
+          else
+          {
+              FB.api('/me', function(response) 
+              {
+                  PASON = response.username
+                  alert(response.username)
+              });
+          }
+       }
+   });
+
+   function returndata()
+   {
+      get = PASON
+      return get
+   };
+
+</script>
  
     </body>
 </html>
