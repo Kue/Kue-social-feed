@@ -1,0 +1,50 @@
+/* --------------------------------------------------
+   Table of Contents
+-----------------------------------------------------
+:: Functions
+*/
+
+
+/* -----------------------------------------
+   Functions
+----------------------------------------- */
+
+<!-- margin/padding -->
+.mrgn-0 	{ margin:10px; 			}		.mrgn-b-45 	{ margin-bottom:45px; 	}		.mrgn-l-45 	{ margin-left:45px;		}
+.mrgn-t-45 	{ margin-top:45px; 		}		.mrgn-l-100 { margin-left:95px;		}		.mrgn-l-44_9{ margin-left:44.5px;	}
+.mrgn-b-33 	{ margin-bottom:33px; 	}		.mrgn-t-33 	{ margin-top:33px; 		}		.mrgn-t-28 	{ margin-top:28px; 		}
+.mrgn-t-40 	{ margin-top:40px; 		}		.mrgn-t-43 	{ margin-top:43px; 		}		.pddng-0 	{ padding:0px;			}
+.pddng-16 	{ padding:16px; 		}
+
+<!-- div -->
+.justfy 	{ text-align:justify; 	}		.ff-copse {font-family: 'Copse', serif;}
+
+.column {margin:0px;}
+
+a {
+	opacity: 0.9;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-ms-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;}
+
+a:hover {opacity: 1;}
+
+textarea {
+	height:auto;
+}
+
+<!-- font -->
+.bold 	{ font-weight:bold; 		}		.italic	{ font-style:italic; 		}
+
+.row { 
+	min-width: 0;
+	max-width:1154px;
+	padding: 0 30px;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, p, blockquote, th, td {
+	font-size: 12px;
+	line-height:21px;	
+}
