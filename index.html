@@ -79,7 +79,7 @@ document.oncontextmenu=new Function("return false;");
 <h1>Kue social feed</h1>
 <div id="user-info"></div>
 
-<button class="_42ft _4jy0 _4jy4 _4jy1" tabindex="0" id="fb-auth" style="cursor:default;" title="ออก!">Login</button>
+<a class="_42ft _4jy0 _4jy4 _4jy1" tabindex="0" id="fb-auth" style="cursor:default;" >Login</a>
 
                 </div><!-- Centered Text END -->
             </div>
@@ -164,19 +164,20 @@ document.oncontextmenu=new Function("return false;");
                     
                     userInfo.innerHTML                             = '<img src="https://graph.facebook.com/' + info.id + '/picture">' + info.name
                                                                      + "<br /> Your Access Token: " + accessToken;
-                    button.innerHTML                                = 'Logout';
+                    a.innerHTML                               = 'Logout';
                     showLoader(false);
                     document.getElementById('other').style.display = "block";
                 }
             }
-        
+   
             function logout(response){
                 userInfo.innerHTML                             =   "";
                 document.getElementById('debug').innerHTML     =   "";
                 document.getElementById('other').style.display =   "none";
                 showLoader(false);
             }
-
+</script>
+ <script>   
    function handleStatusChange(response) {
      document.body.className = response.authResponse ? 'connected' : 'not_connected';
     
@@ -185,11 +186,13 @@ document.oncontextmenu=new Function("return false;");
        updateUserInfo(response);
      }
    }
-   
+</script> 
+ <script>     
     function loginUser() {    
       FB.login(function(response) { }, {scope:'email'});  	
     }
-
+</script>
+ <script>   
     function updateUserInfo(response) {
       FB.api('/me', function(response) {
         document.getElementById('user-info').innerHTML ='<div align="center"><img src="https://graph.facebook.com/' + response.id + '/picture"></div>' + response.name;
