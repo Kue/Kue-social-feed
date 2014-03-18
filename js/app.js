@@ -1,76 +1,29 @@
-   var button;
-            var userInfo;
-            
-            window.fbAsyncInit = function() {
-                FB.init({ appId: '213068875558203', //change the appId to your appId
-                    status: true, 
-                    cookie: true,
-                    xfbml: true,
-                    oauth: true});
+var FACEBOOK_APP_ID = "213068875558203",
+  FACEBOOK_CALLBACK_URL = "//kue.github.io/FriendOnline";
+//  FACEBOOK_CANVAS_URL = "//apps.facebook.com/friend-online"
+//  FACEBOOK_CANVAS_URL_RAW = "http%3A%2F%2Fapps.facebook.com%2Ffriend-online";
+//self == top && (top.location.href = FACEBOOK_CANVAS_URL);
+window.fbAsyncInit = function () {
+  FB.init({
+    appId: FACEBOOK_APP_ID,
+    channelUrl: FACEBOOK_CALLBACK_URL + "/channel.html"
+  });
+  var e = function () {
+    FB.getLoginStatus(function (e) {
+      e.status === "connected" ? $.getJSON("https://graph.facebook.com/fql?q=SELECT%20uid%2C%20name%2C%20pic_square%20FROM%20user%20WHERE%20uid%20%3D%20me()%20OR%20uid%20IN%20(SELECT%20uid2%20FROM%20friend%20WHERE%20uid1%20%3D%20me())&access_token=" + e.authResponse.accessToken, function (e) {
+        FB.Canvas.setSize()
+      }) : top.location.href = "https://www.facebook.com/dialog/oauth?client_id=" + FACEBOOK_APP_ID + "&redirect_uri=" + FACEBOOK_CALLBACK_URL + "&scope=friends_online_presence"
+    })
+  };
+//  setInterval(e, 15e3);
+  e()
+};
+(function (e) {
+  var r, i = e.getElementsByTagName(t)[0];
+  if (e.getElementById(n)) return;
+  r = e.createElement(t);
+  r.id = n;
+  r.src = "//connect.facebook.net/en_US/all.js";
+  i.parentNode.insertBefore(r, i)
+})(document, "script", "facebook-jssdk");
 
-               showLoader(true);
-               
-               function updateButton(response) {
-                    button       =   document.getElementById('fb-auth');
-                    userInfo     =   document.getElementById('user-info').innerHTML ='<div align="center"><img src="https://graph.facebook.com/' + response.id + '/picture"></div>' + response.name;
-                    
-                    if (response.authResponse) {
-                        //user is already logged in and connected
-                        FB.api('/me', function(info) {
-                            login(response, info);
-                        });
-                        
-                        button.onclick = function() {
-                            FB.logout(function(response) {
-                                logout(response);
-                            });
-                        };
-                    } else {
-                        //user is not connected to your app or logged out
-                        button.innerHTML = 'Login';
-                        button.onclick = function() {
-                            showLoader(true);
-                            FB.login(function(response) {
-                                if (response.authResponse) {
-                                    FB.api('/me', function(info) {
-                                        login(response, info);
-                                    });	   
-                                } else {
-                                    //user cancelled login or did not grant authorization
-                                    showLoader(false);
-                                }
-                            }, {scope:'email,user_birthday,status_update,publish_stream,user_about_me'});  	
-                        }
-                    }
-                }
-                
-                //the status changes
-                FB.getLoginStatus(updateButton);
-                FB.Event.subscribe('auth.statusChange', updateButton);	
-            };
-            (function() {
-                var e = document.createElement('script'); e.async = true;
-                e.src = document.location.protocol 
-                    + '//connect.facebook.net/en_US/all.js';
-                document.getElementById('fb-root').appendChild(e);
-            }());
-            
-            
-            function login(response, info){
-                if (response.authResponse) {
-                    var accessToken                                 =   response.authResponse.accessToken;
-                    
-                    userInfo.innerHTML                             = '<img src="https://graph.facebook.com/' + info.id + '/picture">' + info.name
-                                                                     + "<br /> Your Access Token: " + accessToken;
-                    button.innerHTML                               = 'Logout';
-                    showLoader(false);
-                    document.getElementById('other').style.display = "block";
-                }
-            }
-        
-            function logout(response){
-                userInfo.innerHTML                             =   "";
-                document.getElementById('debug').innerHTML     =   "";
-                document.getElementById('other').style.display =   "none";
-                showLoader(false);
-            }
