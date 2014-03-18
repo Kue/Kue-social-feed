@@ -49,19 +49,9 @@
     appId: param('facebook_app_id'),
     frictionlessRequests: true,
     oauth: true,
-    channelUrl: site_url('/channel.html')
+    channelUrl: site_url('kue.github.io/FriendOnline/channel.html')
   })
 }
-
-  $(document).ready(function() {
-  FB.getLoginStatus(function(response) {
-    if (response.authResponse) {
-      // logged in and connected user, someone you know
-    } else {
-      // no user session available, someone you dont know
-    }
-  });
-});
         (function(d){
            var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
            js = d.createElement('script'); js.id = id; js.async = true;
