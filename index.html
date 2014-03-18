@@ -227,28 +227,7 @@
             }
             
         </script>
-
-        <h3>New JavaScript SDK & OAuth 2.0 based FBConnect Tutorial | Thinkdiff.net</h3>
-        <button id="fb-auth">Login</button>
-        <div id="loader" style="display:none">
-            <img src="ajax-loader.gif" alt="loading" />
-        </div>
-        <br />
-        <div id="user-info"></div>
-        <br />
-        <div id="debug"></div>
         
-        <div id="other" style="display:none">
-            <a href="#" onclick="showStream(); return false;">Publish Wall Post</a> |
-            <a href="#" onclick="share(); return false;">Share With Your Friends</a> |
-            <a href="#" onclick="graphStreamPublish(); return false;">Publish Stream Using Graph API</a> |
-            <a href="#" onclick="fqlQuery(); return false;">FQL Query Example</a>
-            
-            <br />
-            <textarea id="status" cols="50" rows="5">Write your status here and click 'Status Set Using Legacy Api Call'</textarea>
-            <br />
-            <a href="#" onclick="setStatus(); return false;">Status Set Using Legacy Api Call</a>
-        </div>	
         <!-- Start Teaser -->
 		<div class="row ">
 			<div class="twelve columns">
@@ -256,18 +235,21 @@
                 <div class="grid_12" id="head_title">
                     
                     <!-- Heading -->	
-                    <h1>jQuery Social Timeline plugin</h1>
-                    
+                    <h1>jQuery Social Timeline plugin</h1><br/>
+                    <button id="fb-auth">Login</button>
                 </div><!-- Centered Text END -->
             </div>
 	
 		</div><!-- Teaser END -->
         
+<div id="other" style="display:none">   
+     
         <!-- Start Header Break Line -->
 		<div class="row">
         	<div class="twelve columns">
 				<hr class="grid_12"></hr>
                 <div id="socialTimeline"></div>
+                
             </div>
 		</div><!-- Header Break Line END -->        
         <div class="clear"></div><!-- CLEAR -->
@@ -289,7 +271,7 @@
         </div><!-- Footer Bottom END --> 
         <!-- Clearfix -->    
         <div class="clear"></div>
-        
+ </div>       
 <script type="text/javascript">
             $('#socialTimeline').dpSocialTimeline({
                 feeds: 
