@@ -32,15 +32,32 @@
 <div id="fb-root"></div>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 <script>
-  FB.init({ appId: '213068875558203', status: true, cookie: true, xfbml: true, oauth: true });
-
-  FB.getLoginStatus(function(response){
-    if(!response.authResponse){
-      alert("NO RESPONSE");
-	  top.location.href="http://www.facebook.com/dialog/oauth?client_id=213068875558203&redirect_uri=http://kue.github.io/Kue-social-feed/";
-    }
-  });
-
+var oauth= require("oauth");
+ 
+oauth       = oauth.OAuth2;
+var facebook   = {
+  appId: "213068875558203",  
+  appSecret: "3991b016fea2ea7b3fe29ea39f269ea0",
+  url: "https://graph.facebook.com",
+  token: "ACCESS_TOKEN"
+}
+ 
+var oAuth = new oauth(
+  facebook.appId,
+  facebook.appSecret,
+  facebook.url
+);
+ 
+// https://developers.facebook.com/docs/technical-guides/fql/
+var query = "SELECT+all+FROM+group+WHERE+uid1=me()";
+ 
+oAuth.getProtectedResource("https://graph.facebook.com/fql?q=" + query, facebook.token, function (error, data, response) {
+  if( error ) {
+    console.log("error");
+  }else {
+    console.log(JSON.parse(data));
+  }
+});
 </script> 
         <!-- Start Teaser -->
 		<div class="row ">
@@ -61,7 +78,17 @@
         	<div class="twelve columns">
 				<hr class="grid_12"></hr> 
                
-<div id="socialTimeline"></div>
+<div id="socialTimeline"></div><br/>	
+<img src="images/mushroom-emo.gif" /><br/>good luck<br/>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=213068875558203";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-comments" data-href="http://kue.github.io/Kue-social-feed/" data-numposts="35" data-colorscheme="light"></div>
                
             </div>
 		</div><!-- Header Break Line END -->        
