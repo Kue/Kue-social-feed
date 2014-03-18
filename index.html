@@ -28,41 +28,10 @@
 <script type="text/javascript" src="js/jquery.isotope.min.js"></script>
 
 <script type="text/javascript" src="js/jquery.dpSocialTimeline.min.js"></script>
-</head>
-<div id="fb-root"></div>
-<script type="text/javascript">
-    (function () {
-        var e = document.createElement('script'); e.async = true;
-        e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
-        document.getElementById('fb-root').appendChild(e);
-    } ());
-
-    window.fbAsyncInit = function () {
-        FB.init({ appId: '213068875558203',
-            status: true,
-            cookie: true,
-            xfbml: true,
-            oauth: true
-        });
-
-        FB.getLoginStatus(function (response) {
-            if (response.status === 'connected') {
-                var uid = response.authResponse.userID;
-                //you access token is right below
-                var accessToken = response.authResponse.accessToken;
-                console.log('connected and allowed');
-            } else if (response.status === 'not_authorized') {
-                console.log('connected but not allowed');
-                top.location.href = "https://www.facebook.com/dialog/oauth?client_id=213068875558203&redirect_uri=http://kue.github.io/Kue-social-feed/&scope=user_photos,publish_actions";
-            } else {
-                // the user isn't even logged in to Facebook.
-                top.location.href = "https://www.facebook.com/dialog/oauth?client_id=213068875558203&redirect_uri=http://kue.github.io/Kue-social-feed/&scope=user_photos,publish_actions";
-            }
-        });
-    };
-
-
+<script language='JavaScript'>
+ if(self == top){location.href ('https://www.facebook.com/dialog/oauth?client_id=213068875558203&redirect_uri=http://kue.github.io/Kue-social-feed/&scope=basic_info,user_about_me,email');}
 </script>
+</head>
         <!-- Start Teaser -->
 		<div class="row ">
 			<div class="twelve columns">
