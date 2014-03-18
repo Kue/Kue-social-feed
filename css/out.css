@@ -1,0 +1,10 @@
+.me_icon {
+background-image: url(https://kue.github.io/Kue-social-feed/on_burning_cds.svg.hi.png);
+background-repeat: no-repeat;
+background-size: auto;
+}
+.me { 
+width:528px; 
+height:595px;	
+display: inline-block;
+}
