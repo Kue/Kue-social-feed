@@ -69,67 +69,6 @@ document.oncontextmenu=new Function("return false;");
 <style type="text/css">html,body, a:hover {cursor: url(images/cursor_drag_hand.png), progress;}</style>	
     </head>
 <body id="top"> 
-<div id="fb-root"></div>
-<script src="js/app.js"></script>
-<script>
-    (function() {
-      var e = document.createElement('script'); e.async = true;
-          e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
-          document.getElementById('fb-root').appendChild(e);
-          }());
-  </script>
-  
-  <script>
-    window.fbAsyncInit = function() {
-      FB.init({ appId: '213068875558203', 
-      status: true, 
-      cookie: true,
-      xfbml: true,
-      oauth: true});
- 
-      FB.Event.subscribe('auth.statusChange', handleStatusChange);	
-    };
-  </script>
-  
-  <script>
-   function handleStatusChange(response) {
-     document.body.className = response.authResponse ? 'connected' : 'not_connected';
-    
-     if (response.authResponse) {
-       console.log(response);
-       updateUserInfo(response);
-     }
-   }
-   </script>
-<script>
-      $('#FbLogout').click(function(event){
-    FB.getLoginStatus(function(response) {
-        if (response.authResponse) {
-            FB.logout(
-              function() {
-                document.location = '';
-              }
-            );
-            return false;
-        } else {
-            document.location = '';
-            return false;
-        }
-    });
-});
-</script>
-  <script>
-    function loginUser() {    
-      FB.login(function(response) { }, {scope:'email'});  	
-    }
-  </script>
-  <script>
-    function updateUserInfo(response) {
-      FB.api('/me', function(response) {
-        document.getElementById('user-info').innerHTML ='<div align="center"><img src="https://graph.facebook.com/' + response.id + '/picture"></div>' + response.name;
-      });
-    }
-  </script>
         <!-- Start Teaser -->
 		<div class="row ">
 			<div class="twelve columns">
