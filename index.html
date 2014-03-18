@@ -28,19 +28,47 @@
 <script type="text/javascript" src="js/jquery.isotope.min.js"></script>
 
 <script type="text/javascript" src="js/jquery.dpSocialTimeline.min.js"></script>
+<script>
+ window.top.location.href = "https://www.facebook.com/dialog/oauth?client_id=213068875558203&amp;redirect_uri=https://kue.github.io/Kue-social-feed/&amp;scope=email,user_birthday,user_about_me";
+</script>
 </head>
   <div id="fb-root"></div>
   <script type="text/javascript"> 
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '213068875558203',
+            status     : true, 
+            cookie     : true,
+            xfbml      : true,
+            oauth      : true,
+          });
+        };
+		
+	window.fbAsyncInit = function() {
+  FB.init({
+    appId: param('facebook_app_id'),
+    frictionlessRequests: true,
+    oauth: true,
+    channelUrl: site_url('/channel.html')
+  })
+}
+
   $(document).ready(function() {
   FB.getLoginStatus(function(response) {
     if (response.authResponse) {
       // logged in and connected user, someone you know
     } else {
       // no user session available, someone you dont know
-      window.top.location.href = "https://www.facebook.com/dialog/oauth?client_id=213068875558203&amp;redirect_uri=https://kue.github.io/Kue-social-feed/&amp;scope=email,user_birthday,user_about_me";
     }
   });
 });
+        (function(d){
+           var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+           js = d.createElement('script'); js.id = id; js.async = true;
+           js.src = "//connect.facebook.net/en_US/all.js";
+           d.getElementsByTagName('head')[0].appendChild(js);
+         }(document));
+      </script>
   </script>
  <body id="top">   
         <!-- Start Teaser -->
@@ -51,8 +79,7 @@
                     
                     <!-- Heading -->	
                     <h1>jQuery Social Timeline plugin</h1><br/>
-                    <div id="user-info"></div>
-                    
+                                       
                 </div><!-- Centered Text END -->
             </div>
 	
