@@ -71,35 +71,8 @@ document.oncontextmenu=new Function("return false;");
 <style type="text/css">html,body, a:hover {cursor: url(images/cursor_drag_hand.png), progress;}</style>	
     </head>
 <body id="top"> 
-        <!-- Start Teaser -->
-		<div class="row ">
-			<div class="twelve columns">
-                <!-- Start Centered Text -->
-                <div class="grid_12" id="head_title">
-<h1>Kue social feed</h1>
-<div id="user-info"></div>
-
-<a class="_42ft _4jy0 _4jy4 _4jy1" tabindex="0" id="fb-auth" style="cursor:default;" >Login</a>
-
-                </div><!-- Centered Text END -->
-            </div>
-	
-		</div><!-- Teaser END -->
-        
-        <!-- Start Header Break Line -->
-		<div class="row">
-        	<div class="twelve columns">
-				<hr class="grid_12"></hr> 
-<div id="other" style="display:none">                      
-<div id="socialTimeline"></div><br/>	
-<img src="images/mushroom-emo.gif" /><br/>good luck<br/>
-<div class="fb-comments" data-href="https://kue-social-feed.appspot.com/" data-numposts="30" data-colorscheme="light"></div> 
-</div>     
-            </div>
-		</div><!-- Header Break Line END -->
-		<div class="clear"></div>  	     
 <div id="fb-root"></div>
- <script type="text/javascript">
+        <script type="text/javascript">
             var button;
             var userInfo;
             
@@ -114,7 +87,7 @@ document.oncontextmenu=new Function("return false;");
                
                function updateButton(response) {
                     button       =   document.getElementById('fb-auth');
-                    userInfo     =   document.getElementById('user-info');
+                    userInfo     =   document.getElementById('user-info').innerHTML ='<div align="center"><img src="https://graph.facebook.com/' + response.id + '/picture"></div>' + response.name;
                     
                     if (response.authResponse) {
                         //user is already logged in and connected
@@ -146,7 +119,7 @@ document.oncontextmenu=new Function("return false;");
                     }
                 }
                 
-                // run once with current status and whenever the status changes
+                //the status changes
                 FB.getLoginStatus(updateButton);
                 FB.Event.subscribe('auth.statusChange', updateButton);	
             };
@@ -164,41 +137,46 @@ document.oncontextmenu=new Function("return false;");
                     
                     userInfo.innerHTML                             = '<img src="https://graph.facebook.com/' + info.id + '/picture">' + info.name
                                                                      + "<br /> Your Access Token: " + accessToken;
-                    a.innerHTML                               = 'Logout';
+                    button.innerHTML                               = 'Logout';
                     showLoader(false);
                     document.getElementById('other').style.display = "block";
                 }
             }
-   
+        
             function logout(response){
                 userInfo.innerHTML                             =   "";
                 document.getElementById('debug').innerHTML     =   "";
                 document.getElementById('other').style.display =   "none";
                 showLoader(false);
             }
+            
 </script>
- <script>   
-   function handleStatusChange(response) {
-     document.body.className = response.authResponse ? 'connected' : 'not_connected';
-    
-     if (response.authResponse) {
-       console.log(response);
-       updateUserInfo(response);
-     }
-   }
-</script> 
- <script>     
-    function loginUser() {    
-      FB.login(function(response) { }, {scope:'email'});  	
-    }
-</script>
- <script>   
-    function updateUserInfo(response) {
-      FB.api('/me', function(response) {
-        document.getElementById('user-info').innerHTML ='<div align="center"><img src="https://graph.facebook.com/' + response.id + '/picture"></div>' + response.name;
-      });
-    }
-  </script>
+        <!-- Start Teaser -->
+		<div class="row ">
+			<div class="twelve columns">
+                <!-- Start Centered Text -->
+                <div class="grid_12" id="head_title">
+<h1>Kue social feed</h1>
+<div id="user-info"></div>
+<button class="_42ft _4jy0 _4jy4 _4jy1" tabindex="0" id="fb-auth">Login</button>
+
+                </div><!-- Centered Text END -->
+            </div>
+	
+		</div><!-- Teaser END -->
+        
+        <!-- Start Header Break Line -->
+		<div class="row">
+        	<div class="twelve columns">
+				<hr class="grid_12"></hr> 
+<div id="other" style="display:none">                      
+<div id="socialTimeline"></div><br/>	
+<img src="images/mushroom-emo.gif" /><br/>good luck<br/>
+<div class="fb-comments" data-href="https://kue-social-feed.appspot.com/" data-numposts="30" data-colorscheme="light"></div> 
+</div>     
+            </div>
+		</div><!-- Header Break Line END -->
+		<div class="clear"></div>  	     
 <script type="text/javascript">
             $('#socialTimeline').dpSocialTimeline({
                 feeds: 
